@@ -18,15 +18,19 @@ async function getTeams() {
         if (!res.ok) throw new Error("Erro na API");
 
         const dados = await res.json();
+
+        // ✅ MAPA NOME -> TOKEN
+        const mapaTimes = {};
+        dados.forEach(t => {
+            mapaTimes[t.nome] = t.token;
+        });
+
         const teams = [...dados].sort(() => Math.random() - 0.5);
 
         const grupos = ["A", "B", "C", "D", "E", "F", "G", "H"];
         let classificados = {};
         let html = "<h2>Fase de Grupos</h2>";
 
-        // =========================
-        // GRUPOS
-        // =========================
         grupos.forEach((grupo, index) => {
 
             const grupoTimes = teams.slice(index * 4, index * 4 + 4);
@@ -101,28 +105,35 @@ async function getTeams() {
             </div></div>`;
         });
 
-        // =========================
-        // FUNÇÕES
-        // =========================
-
+        // ✅ FUNÇÃO JOGO ATUALIZADA
         function jogo(a, b) {
             let g1 = Math.floor(Math.random() * 5);
             let g2 = Math.floor(Math.random() * 5);
 
+            let p1 = 0;
+            let p2 = 0;
+
             let texto = `${a} ${g1} x ${g2} ${b}`;
 
             if (g1 === g2) {
-                let p1 = Math.floor(Math.random() * 5) + 1;
-                let p2 = Math.floor(Math.random() * 5) + 1;
+                p1 = Math.floor(Math.random() * 5) + 1;
+                p2 = Math.floor(Math.random() * 5) + 1;
 
                 while (p1 === p2) p2 = Math.floor(Math.random() * 5) + 1;
 
                 texto += ` (Pênaltis: ${p1} x ${p2})`;
-
-                return { vencedor: p1 > p2 ? a : b, texto };
             }
 
-            return { vencedor: g1 > g2 ? a : b, texto };
+            return {
+                vencedor: g1 > g2 || (g1 === g2 && p1 > p2) ? a : b,
+                texto,
+                g1,
+                g2,
+                p1,
+                p2,
+                timeA: a,
+                timeB: b
+            };
         }
 
         function fase(lista) {
@@ -137,10 +148,6 @@ async function getTeams() {
 
             return { vencedores, jogos };
         }
-
-        // =========================
-        // OITAVAS
-        // =========================
 
         let oitavas = [
             classificados["A"].primeiro, classificados["B"].segundo,
@@ -166,6 +173,7 @@ async function getTeams() {
 
         let final = jogo(semi1.vencedor, semi2.vencedor);
 
+        // ✅ POST CORRETO
         await fetch(
             "https://development-internship-api.geopostenergy.com/WorldCup/FinalResult",
             {
@@ -175,13 +183,14 @@ async function getTeams() {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    champion: final.vencedor
+                    equipeA: mapaTimes[final.timeA],
+                    equipeB: mapaTimes[final.timeB],
+                    golsEquipeA: final.g1,
+                    golsEquipeB: final.g2,
+                    golsPenaltyTimeA: final.p1,
+                    golsPenaltyTimeB: final.p2
                 })
             });
-
-        // =========================
-        // BRACKET
-        // =========================
 
         html += `
 <div class="bracket">
@@ -211,7 +220,7 @@ async function getTeams() {
         </div>
     </div>
 
-    <!-- DIREITA (AGORA COM .right) -->
+    <!-- DIREITA -->
     <div class="round right">
         <div class="round-title">Semifinal</div>
         <div class="match-box">${semi2.texto}</div>
