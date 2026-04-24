@@ -215,6 +215,7 @@ async function getTeams() {
     <div class="round final-column">
         <div class="round-title">FINAL</div>
         <div class="match-box">${final.texto}</div>
+
         <div class="champion-name">
             🏆 Campeão: ${final.vencedor}
         </div>
@@ -238,6 +239,8 @@ async function getTeams() {
 
 </div>
 `;
+
+
 
         output.innerHTML = html;
 
