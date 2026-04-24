@@ -167,7 +167,7 @@ async function getTeams() {
         let final = jogo(semi1.vencedor, semi2.vencedor);
 
         // =========================
-        // BRACKET (CORRIGIDO)
+        // BRACKET
         // =========================
 
         html += `
