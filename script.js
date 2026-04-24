@@ -10,7 +10,7 @@ async function getTeams() {
             {
                 method: "GET",
                 headers: {
-                    "git-user": "beatr"
+                    "git-user": "beatrizsctaveira"
                 }
             }
         );
@@ -165,6 +165,19 @@ async function getTeams() {
         let semi2 = jogo(quartasDirRes.vencedores[0], quartasDirRes.vencedores[1]);
 
         let final = jogo(semi1.vencedor, semi2.vencedor);
+
+        await fetch(
+            "https://development-internship-api.geopostenergy.com/WorldCup/FinalResult",
+            {
+                method: "POST",
+                headers: {
+                    "git-user": "beatrizsctaveira",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    champion: final.vencedor
+                })
+            });
 
         // =========================
         // BRACKET
