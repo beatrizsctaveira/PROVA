@@ -18,7 +18,7 @@ async function getTeams() {
         if (!res.ok) throw new Error("Erro na API");
 
         const dados = await res.json();
-        const teams = dados.sort(() => Math.random() - 0.5);
+        const teams = [...dados].sort(() => Math.random() - 0.5);
 
         const grupos = ["A", "B", "C", "D", "E", "F", "G", "H"];
         let classificados = {};
