@@ -1,0 +1,239 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #4b006e, #7a0a8f);
+    color: white;
+}
+
+/* =========================
+CONTAINER
+========================= */
+
+.container {
+    text-align: center;
+    width: 100%;
+}
+
+/* =========================
+BOTÃO
+========================= */
+
+button {
+    padding: 12px 24px;
+    background: #00a8ff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: .2s;
+}
+
+button:hover {
+    background: #0090dd;
+    transform: scale(1.05);
+}
+
+/* =========================
+GRUPOS
+========================= */
+
+.group {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    margin: 25px auto;
+    border-radius: 14px;
+    width: 90%;
+    max-width: 500px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.group-section {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 12px;
+    margin-top: 12px;
+    border-radius: 10px;
+}
+
+.group-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd86b;
+    margin-bottom: 10px;
+}
+
+.match {
+    padding: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    font-size: 16px;
+}
+
+.score {
+    font-weight: bold;
+    color: #00ff99;
+}
+
+.table {
+    margin-top: 10px;
+    font-size: 13px;
+    background: rgba(0, 0, 0, .15);
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.team-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.classified {
+    background: rgba(0, 255, 100, 0.1);
+    border: 1px solid #00ff66;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+/* =========================
+BRACKET
+========================= */
+
+.bracket {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(120px, 180px));
+    column-gap: 25px;
+    margin-top: 80px;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0.9);
+    transform-origin: top center;
+}
+
+/* cada coluna */
+.round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* títulos */
+.round-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #f5d27a;
+}
+
+/* =========================
+MATCH BOX
+========================= */
+
+.match-box {
+    padding: 10px;
+    border: 2px solid #d8b04d;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 130px;
+    font-size: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* linha horizontal (lado esquerdo padrão) */
+.match-box::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 20px;
+    height: 2px;
+    background: #d8b04d;
+}
+
+/* linha vertical (lado esquerdo padrão) */
+.round::before {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: 10%;
+    height: 80%;
+    width: 2px;
+    background: #d8b04d;
+}
+
+
+.round.right .match-box::after {
+    left: -20px;
+    right: auto;
+}
+
+.round.right::before {
+    left: -20px;
+    right: auto;
+}
+
+.final-column .match-box::after,
+.final-column::before {
+    display: none;
+}
+
+/* =========================
+ESPAÇAMENTO 
+========================= */
+
+/* Oitavas */
+.round:nth-child(1) .match-box,
+.round:nth-child(7) .match-box {
+    margin: 10px 0;
+}
+
+/* Quartas */
+.round:nth-child(2) .match-box,
+.round:nth-child(6) .match-box {
+    margin: 35px 0;
+}
+
+/* Semifinal */
+.round:nth-child(3) .match-box,
+.round:nth-child(5) .match-box {
+    margin: 70px 0;
+}
+
+/* Final */
+.round:nth-child(4) .match-box {
+    margin: 110px 0;
+}
+
+/* =========================
+FINAL CENTRAL
+========================= */
+
+.final-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.final-column .match-box {
+    border: 3px solid #f5d27a;
+    font-size: 18px;
+    padding: 16px;
+    font-weight: bold;
+}
+
+/* =========================
+CAMPEÃO
+========================= */
+
+.champion-name {
+    margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #00ffcc;
+    text-align: center;
+}
